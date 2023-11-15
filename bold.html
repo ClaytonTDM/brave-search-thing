@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Engine with Whole Words Bold</title>
+</head>
+<body>
+  <div id="results">
+    <div class="result-item">
+      <p style="margin-bottom: 0;"><a href="&nbsp;https://example.com">12 Cool Rocks and Minerals To Add To Your Collection! - Rock Finder</a></p>
+    </div>
+  </div>
+
+  <script>
+    // Define the query string with the keyword (singular)
+    var queryString = "cool rocks";
+
+    // Get all <a> elements within the <div id="results">
+    var links = document.querySelectorAll("#results .result-item p a");
+
+    // Function to escape special characters in a string for RegExp
+    function escapeRegExp(string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    // Loop through each <a> element
+    links.forEach(function(link) {
+      // Get the text content of the link
+      var linkText = link.textContent;
+
+      // Loop through each word in the query
+      queryString.split(" ").forEach(function(keyword) {
+        // Create a regular expression to match the whole word, case-insensitive
+        var regex = new RegExp("\\b" + escapeRegExp(keyword) + "\\b", "gi");
+
+        // Replace all occurrences of the matched keyword with the <strong> element
+        linkText = linkText.replace(regex, function(match) {
+          return "<strong>" + match + "</strong>";
+        });
+      });
+
+      // Update the link's HTML with the bolded text
+      link.innerHTML = linkText;
+    });
+  </script>
+</body>
+</html>
